@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/nilrajpurohit/GitOps-ArgoCD.git
+    targetRevision: HEAD
+    path: dev
+  destination:
+    server: https://kuberenetes.default.svc
+    namespace: myapp
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
